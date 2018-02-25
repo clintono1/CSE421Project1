@@ -28,6 +28,9 @@ Nathan Hall <nathanha@buffalo.edu>
 >> `struct' member, global or static variable, `typedef', or
 >> enumeration.  Identify the purpose of each in 25 words or less.
 
+//Need to define a struct that will wake up the current thread, and refrence the queue of threads.
+//Need to define a list or queue to hold threads in waiting.
+
 ---- ALGORITHMS ----
 
 >> A2: Briefly describe what happens in a call to timer_sleep(),
