@@ -19,6 +19,9 @@ Nathan Hall <nathanha@buffalo.edu>
 >> preparing your submission, other than the Pintos documentation, course
 >> text, lecture notes, and course staff.
 
+//Project summary
+http://courses.cs.vt.edu/~cs3204/spring2008/pintos/Project1Session.pdf
+
 			     ALARM CLOCK
 			     ===========
 
@@ -31,26 +34,59 @@ Nathan Hall <nathanha@buffalo.edu>
 //Need to define a struct that will wake up the current thread, and refrence the queue of threads.
 //Need to define a list or queue to hold threads in waiting.
 
+//In thread:
+int64_t sleepCount;
+//Count ticks of sleeping threads
+
+//In timer:
+struct list sleepingList;
+//List of the threads that are sleeping
+
 ---- ALGORITHMS ----
 
 >> A2: Briefly describe what happens in a call to timer_sleep(),
 >> including the effects of the timer interrupt handler.
+//In sleep:
+-Check ticks > 0
+-Disable interrupts
+-Set sleepCount to how long thread will sleep for
+-Add thread to sleepingList
+-Block thread
+-Enable interrupts
+
+//In interrupt handler:
+-Check the sleepCount of each element in sleepingList for elements where sleepCount <= the global ticks amount
+  -Disable interrupts
+  -For those that are, set sleepCount to 0, remove from sleepingList and unblock
+-Loop this as long as there are applicable elements (speepCount <= global ticks)
+-Enable interrupts
+
 
 >> A3: What steps are taken to minimize the amount of time spent in
 >> the timer interrupt handler?
+By ensuring sleepingList is in order, it keeps from having to search the entire list every time. 
+Instead it can go in order to where it should be.
+
 
 ---- SYNCHRONIZATION ----
 
 >> A4: How are race conditions avoided when multiple threads call
 >> timer_sleep() simultaneously?
+sleepingList is only modified when interrupts are disabled, to prevent issues in simultaneous calls to timer_sleep()
+
 
 >> A5: How are race conditions avoided when a timer interrupt occurs
 >> during a call to timer_sleep()?
+Interrupts are turned off when sleepCount is being modified
 
 ---- RATIONALE ----
 
 >> A6: Why did you choose this design?  In what ways is it superior to
 >> another design you considered?
+This implementation is a slight adaptation of my original draft when looking at this project. 
+Minor adjustments to functionality have been made to improve performance and readibility. 
+For example sorting the sleepingList, to improve performance, rather than letting it go out of order. 
+Originally, it hadn't been a concern, but question A3 reminded me that effeciency is a concern.
 
 			 PRIORITY SCHEDULING
 			 ===================
