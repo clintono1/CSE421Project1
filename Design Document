@@ -160,10 +160,17 @@ Then the lock will be released.
 >> how your implementation avoids it.  Can you use a lock to avoid
 >> this race?
 
+For our implementation we've discussed all the things to consider
+when serring a thread's priority. We plan to check for any donated priorities, 
+and checking the max or highest priority of the entire list. Also to be flexible 
+enough to deal with recently added or danted priorities. 
+
 ---- RATIONALE ----
 
 >> B7: Why did you choose this design?  In what ways is it superior to
 >> another design you considered?
+Sorting the list takes to much time, so it is best to just keep it unordered
+and take the queue by priority. 
 
 			  ADVANCED SCHEDULER
 			  ==================
