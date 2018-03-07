@@ -97,20 +97,62 @@ Originally, it hadn't been a concern, but question A3 reminded me that effecienc
 >> `struct' member, global or static variable, `typedef', or
 >> enumeration.  Identify the purpose of each in 25 words or less.
 
+//We need to Create a struct of type thread that has a list.
+//we need to be able to control the priority "lock" and "unlock" members of the list
+--thread.h--
+	int eff_priority;
+	struct lock * lock_to_acquire		
+	struct list locks_waited_by_others;
+//Need to sync elements,
+--sync.h--
+	struct list_elem thread_elem; //list elements for waited lock queue
+
 >> B2: Explain the data structure used to track priority donation.
 >> Use ASCII art to diagram a nested donation.  (Alternately, submit a
 >> .png file.)
+
+
+   T1     T2 T3     T4
+    \     /   \     /
+     \   /     \   /
+      \ /       \ /    - T1 and T2 are waiting on L1
+       L1        L2    - T2 and T3 are waiting on L2
+       |         |   
+       T5        T6    -L1 is held by T5, L2 by T6
+        \        /
+         \      /
+          \    /
+           \  /
+            L3         - T5 and T6 are waiting on L3
+            |
+            T7         - L3 is held by T7
+
+Using a forest type mechanism, we plan to use eff_priority to track priority donation. 
+Using whatever information is provided the data structure should produce the correct priority.
+
 
 ---- ALGORITHMS ----
 
 >> B3: How do you ensure that the highest priority thread waiting for
 >> a lock, semaphore, or condition variable wakes up first?
 
+We plan to do this by searching for the thread with the highest effective priority 
+on wake up.
+
 >> B4: Describe the sequence of events when a call to lock_acquire()
 >> causes a priority donation.  How is nested donation handled?
 
+In lock_acquire(), if a thread is waiting we check the priority vs the 
+effective priority of the lock holder. Then we set the current thread to the higher priority, 
+and recursively climb the tree. 
+
 >> B5: Describe the sequence of events when lock_release() is called
 >> on a lock that a higher-priority thread is waiting for.
+
+this method will remove the lock from the list of locks and 
+force the list priority to be recalculated. Which should only
+take max amount of the threads original priority.
+Then the lock will be released.
 
 ---- SYNCHRONIZATION ----
 
