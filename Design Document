@@ -112,20 +112,20 @@ Originally, it hadn't been a concern, but question A3 reminded me that effecienc
 >> .png file.)
 
 
-   T1     T2 T3     T4
-    \     /   \     /
-     \   /     \   /
-      \ /       \ /    - T1 and T2 are waiting on L1
-       L1        L2    - T2 and T3 are waiting on L2
+   P1     P2 P3     P4
+    \ /   \     /
+     \    /     \   /
+      \ /       \ /    - P1 and P2 are waiting on L1
+       L1        L2    - P2 and P3 are waiting on L2
        |         |   
-       T5        T6    -L1 is held by T5, L2 by T6
+       p5        p6    -L1 is held by p5, L2 by p6
         \        /
          \      /
           \    /
            \  /
-            L3         - T5 and T6 are waiting on L3
+            L3         - P5 and P6, waiting for L3
             |
-            T7         - L3 is held by T7
+            P7         - L3 is held by T7
 
 Using a forest type mechanism, we plan to use eff_priority to track priority donation. 
 Using whatever information is provided the data structure should produce the correct priority.
