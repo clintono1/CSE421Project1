@@ -1,0 +1,6 @@
+FAIL
+Some tick counts were missing or differed from those expected by more than 50.
+thread   actual <-> expected explanation
+------ -------- --- -------- ----------------------------------------
+     0     2997 >>> 1904     Too big, by 1043.
+     1        4 <<< 1096     Too small, by 1042.
