@@ -86,7 +86,7 @@ Interrupts are turned off when sleepCount is being modified
 This implementation is a slight adaptation of my original draft when looking at this project. 
 Minor adjustments to functionality have been made to improve performance and readibility. 
 For example sorting the sleepingList, to improve performance, rather than letting it go out of order. 
-Originally, it hadn't been much of a concern, but question A3 reminded me that effeciency is a concern.
+Originally, it hadn't been a concern, but question A3 reminded me that effeciency is a concern.
 
 			 PRIORITY SCHEDULING
 			 ===================
@@ -181,15 +181,21 @@ and take the queue by priority.
 >> `struct' member, global or static variable, `typedef', or
 >> enumeration.  Identify the purpose of each in 25 words or less.
 
-//in thread.h
-#include "fixedpoint.h" //header file for fixedpoint math
+//in thread.c
+#include "focus-point.h" //header file for fixedpoint math
+int init_priority //initial priority before prirority donating
 int priority;   // priority  of threads
 int load_avg; //global variable, system's current load avg
+int recent_cpu;
+#define NICE_MAX 20;
+#define NICE_MIN -20; 
 
-struct thread
-int priority	//priority of thread
+//in thread.h
+struct thread{
+int ticks //
+int priority	//priority of  thread
 int recent_cpu //calculated recent_cpu need to use fixedpoint arithmetic
-int nice;	//thread's current nice value
+int nice;	//thread's current nice value min-20 max 20
 
 ---- ALGORITHMS ----
 
@@ -237,7 +243,7 @@ as a lot of time isn't used on the scheduler.
 We debated on what we would do in the case of two equal priorities. 
 Our current implementation can lead to starvation,
 but settled on it due to simplicity. If we had extra time,
-we would try and implement some form of aging, this could be done by adding a conditional 
+we would try and implement some form of aging, this could be done by adding a separate queue with the threads with equal priorities, and then assigning them priority based on time spent in the queue.
 when two priorities are equal the thread gets switched to. 
 
 >> C6: The assignment explains arithmetic for fixed-point math in
@@ -247,7 +253,7 @@ when two priorities are equal the thread gets switched to.
 >> type and/or a set of functions or macros to manipulate fixed-point
 >> numbers, why did you do so?  If not, why not?
 
-We implemented fixed-point math in the header file fixedpoint.h. Needed functions will be called when using recent_cpu.
+We implemented fixed-point math in the header file focus-point.h. Needed functions will be called when using fixedpoint numbers
 Calculations will be done using the ones found in the pintos documentation (B.6). 
 This was done to improve readability within thread code.
 
