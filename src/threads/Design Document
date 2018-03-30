@@ -86,7 +86,7 @@ Interrupts are turned off when sleepCount is being modified
 This implementation is a slight adaptation of my original draft when looking at this project. 
 Minor adjustments to functionality have been made to improve performance and readibility. 
 For example sorting the sleepingList, to improve performance, rather than letting it go out of order. 
-Originally, it hadn't been a concern, but question A3 reminded me that effeciency is a concern.
+Originally, it hadn't been much of a concern, but question A3 reminded me that effeciency is a concern.
 
 			 PRIORITY SCHEDULING
 			 ===================
