@@ -89,14 +89,25 @@ of working with kernel operations.
 >> `struct' member, global or static variable, `typedef', or
 >> enumeration.  Identify the purpose of each in 25 words or less.
 
+Unsure which pieces will need to be implemented, though changes will take place primarily in thread.h and syscall.c
+
 >> B2: Describe how file descriptors are associated with open files.
 >> Are file descriptors unique within the entire OS or just within a
 >> single process?
+
+At this time, we plan to keep file descriptors unique for the entire OS, so that we dont put too much information on struct thread 
 
 ---- ALGORITHMS ----
 
 >> B3: Describe your code for reading and writing user data from the
 >> kernel.
+
+Reading - Ensure buffer and buffer+size are valid
+	- Get file system lock - If stdout release the lock, if stdin get keys and release.
+				-Else open the file, and read with file_read, then release
+Writing - Ensure buffer and buffer+size are valid
+	- Get file system lock - If stdout release the lock, if stdin print content of buffer
+				-Else write buffer with file_write, then release
 
 >> B4: Suppose a system call causes a full page (4,096 bytes) of data
 >> to be copied from user space into the kernel.  What is the least
