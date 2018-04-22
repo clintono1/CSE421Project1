@@ -128,6 +128,13 @@ remain the same.
 >> B5: Briefly describe your implementation of the "wait" system call
 >> and how it interacts with process termination.
 
+We plan on tracking the child process' exit status in a new struct. These
+	statuses will then be added to a list in the parent. When a child 
+	is created, the parent will wait until the child updates the return
+	status and wakes the parent. The parent will also be responsible to
+	avoid race conditions. When a child exits, the updated status will be 
+	sent to the parent.
+
 >> B6: Any access to user program memory at a user-specified address
 >> can fail due to a bad pointer value.  Such accesses must cause the
 >> process to be terminated.  System calls are fraught with such
@@ -141,6 +148,13 @@ remain the same.
 >> allocated resources (locks, buffers, etc.) are freed?  In a few
 >> paragraphs, describe the strategy or strategies you adopted for
 >> managing these issues.  Give an example.
+
+The easiest way of ensuring that there is no bad pointer value is writing 
+	a short method that checks the value before validation. This method
+	will check to ensure the pointer value is valid. If it is not, the 
+	process can then be terminated, or the issue resolved. Otherwise,
+	the process can proceed as it would. If an error does still occur,
+	this exception can be handled
 
 ---- SYNCHRONIZATION ----
 
