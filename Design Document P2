@@ -37,19 +37,48 @@ FirstName LastName: contribution
 >> `struct' member, global or static variable, `typedef', or
 >> enumeration.  Identify the purpose of each in 25 words or less.
 
+At the moment we are not to sure if any new struct actually need to be implemented.
+
+But most changes will ocuut in process.c 
+
+Maybe develop a struct to hold/ keep track of the address of the arguments
+
+
+
 ---- ALGORITHMS ----
 
 >> A2: Briefly describe how you implemented argument parsing.  How do
+
+Seeing how strtok_r() works the best implementation would be to make the
+arguments given parsebele based off of the spaces. We can implements setup_stack()
+to store the arguments in an array. 
+
 >> you arrange for the elements of argv[] to be in the right order?
+
+Refrencing Section 3.5.1 from the pintos manual helps in 
+setting up the stack. Using address PHYS_BASE and parsing the 
+args in reverse order will help keep the args in order as we push to the stack.
+
 >> How do you avoid overflowing the stack page?
+
+Keeping a limit on the items able to be pushed ontu the stack/
+managing it's size will be ebenefecial in avoiding overflow
+on the stack page.
 
 ---- RATIONALE ----
 
 >> A3: Why does Pintos implement strtok_r() but not strtok()?
 
+One reason being the save_ptr is taken care of for strtok_r().
+But also strtok_() can be called from more than one thread, to parse more than one string. 
+
 >> A4: In Pintos, the kernel separates commands into a executable name
 >> and arguments.  In Unix-like systems, the shell does this
 >> separation.  Identify at least two advantages of the Unix approach.
+
+1) The Unix approach is safer, and simpler using shell type operations for parsing data/ memory.
+2)This is a more effecient way to handle errors on the user level before getting into the complexity 
+of working with kernel operations. 
 
 			     SYSTEM CALLS
 			     ============
