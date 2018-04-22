@@ -105,6 +105,15 @@ of working with kernel operations.
 >> for a system call that only copies 2 bytes of data?  Is there room
 >> for improvement in these numbers, and how much?
 
+The least number of inspections is 1. This happens when inspecting using
+pagedir_get_page() and the data is stored on that page.
+The greatest number of inspections is 2. Which occurs if the user space
+is larger than the page size.
+
+For 2 Bytes of data both the least and greatest number of inspections
+remain the same.
+
+
 >> B5: Briefly describe your implementation of the "wait" system call
 >> and how it interacts with process termination.
 
