@@ -39,7 +39,7 @@ FirstName LastName: contribution
 
 At the moment we are not to sure if any new struct actually need to be implemented.
 
-But most changes will ocuut in process.c 
+But most changes will ocuur in process.c 
 
 Maybe develop a struct to hold/ keep track of the address of the arguments
 
@@ -47,13 +47,13 @@ Maybe develop a struct to hold/ keep track of the address of the arguments
 
 ---- ALGORITHMS ----
 
->> A2: Briefly describe how you implemented argument parsing.  How do
+>> A2: Briefly describe how you implemented argument parsing.  
 
 Seeing how strtok_r() works the best implementation would be to make the
 arguments given parsebele based off of the spaces. We can implements setup_stack()
 to store the arguments in an array. 
 
->> you arrange for the elements of argv[] to be in the right order?
+>> How do you arrange for the elements of argv[] to be in the right order?
 
 Refrencing Section 3.5.1 from the pintos manual helps in 
 setting up the stack. Using address PHYS_BASE and parsing the 
