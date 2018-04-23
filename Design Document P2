@@ -174,8 +174,17 @@ boolean is then passed back to the parent.
 >> terminates without waiting, before C exits?  After C exits?  Are
 >> there any special cases?
 
-Both processes have a struct that represent the child's status. A
-boolean condition that is true
+We already have a struct to represent list of children. Next we add a lock
+to ensure proper synchronization.
+P first checks the status of the child, if P call wait(C) before C exits
+P waits for C to exit by process_exit. Then updates the status of the child.
+
+If P terminates without waiting before C exists, C's parent pointer
+needs to be set to null,  and data is then freed using process_exit
+
+Special case: We need conditional to check if C's parent pointer != null both before 
+and after wait(C) is called and throw an exception if it does.
+ 
 ---- RATIONALE ----
 
 >> B9: Why did you choose to implement access to user memory from the
