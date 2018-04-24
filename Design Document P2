@@ -20,9 +20,9 @@ Nathan Hall <nathanha@buffalo.edu>
 >> each member of your team. If some team members contributed significantly
 >> more or less than others (e.g. 2x), indicate that here.
 
-FirstName LastName: contribution
-FirstName LastName: contribution
-FirstName LastName: contribution
+Terrell Green: Argument passing
+Clinton Oka:  System Calls
+Nathan Hall: System Calls
 
 >> Please cite any offline or online sources you consulted while
 >> preparing your submission, other than the Pintos documentation, course
