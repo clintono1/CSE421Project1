@@ -1,3 +1,3 @@
-# CSE421Project1
+# CSE421Project2
 
-This is the Alarm Clock branch. Can be collapsed into develop once all set
+
