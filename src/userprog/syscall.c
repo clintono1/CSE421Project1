@@ -48,7 +48,7 @@ void halt (void){
 }
 
 void exit (int status){
-  printf ("Exiting, status: ", status);
+  printf ("%s: exit(%d)\n", status);
   thread_exit(status);
 }
 
