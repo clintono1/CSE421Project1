@@ -43,6 +43,20 @@ But most changes will ocuur in process.c
 
 Maybe develop a struct to hold/ keep track of the address of the arguments
 
+**AFTER IMPLEMENTATION**
+src/threads/thread.h 
+ T_CHILD is in thread, basically defining the child and its relationship to the parent
+ struct t_child
+       {
+         int pid;              		
+         int load			   	
+         bool wait;              		
+         int status;              		
+	 struct semaphore wait_sema		
+         struct semaphore load_sema;      	
+	 struct list_elem childelem		
+       };
+
 
 
 ---- ALGORITHMS ----
