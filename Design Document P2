@@ -103,13 +103,22 @@ of working with kernel operations.
 >> `struct' member, global or static variable, `typedef', or
 >> enumeration.  Identify the purpose of each in 25 words or less.
 
-Unsure which pieces will need to be implemented, though changes will take place primarily in thread.h and syscall.c
+In both syscall.c & syscall.h 
+
+**Struct openfile // One of th few struct created and made in syscall. Here we use this to open the file and change its status 
+whether opened, closed, etc
+**Struct Thread //holds currents threads properties and descriptors
+**Struct child //holds thread parents->child descriptors
+** Struct file
 
 >> B2: Describe how file descriptors are associated with open files.
 >> Are file descriptors unique within the entire OS or just within a
 >> single process?
 
-At this time, we plan to keep file descriptors unique for the entire OS, so that we dont put too much information on struct thread 
+FDs are unique for every accessed file, to individual 
+processes. 
+Where the process keep track of their accessed files,
+therfore file descriptors differ from one another per file, but also may vary between different processes. 
 
 ---- ALGORITHMS ----
 
@@ -204,20 +213,21 @@ and after wait(C) is called and throw an exception if it does.
 >> B9: Why did you choose to implement access to user memory from the
 >> kernel in the way that you did?
 
-Implemented this way due to ease.
+This was the mosst effecient and knowlegedble way for us, given skill level and our knowlegde of the OS
 
 >> B10: What advantages or disadvantages can you see to your design
 >> for file descriptors?
 
 Advantages:
+Simple, Easy to Edit. Self Explanatory
 
 Disadvantages:
-Costly
+Costly. 
 
 >> B11: The default tid_t to pid_t mapping is the identity mapping.
 >> If you changed it, what advantages are there to your approach?
 
-Mapping was not changed
+Mapping was not changed.
 			   SURVEY QUESTIONS
 			   ================
 
