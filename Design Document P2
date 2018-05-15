@@ -103,22 +103,13 @@ of working with kernel operations.
 >> `struct' member, global or static variable, `typedef', or
 >> enumeration.  Identify the purpose of each in 25 words or less.
 
-In both syscall.c & syscall.h 
-
-**Struct openfile // One of th few struct created and made in syscall. Here we use this to open the file and change its status 
-whether opened, closed, etc
-**Struct Thread //holds currents threads properties and descriptors
-**Struct child //holds thread parents->child descriptors
-** Struct file
+Unsure which pieces will need to be implemented, though changes will take place primarily in thread.h and syscall.c
 
 >> B2: Describe how file descriptors are associated with open files.
 >> Are file descriptors unique within the entire OS or just within a
 >> single process?
 
-FDs are unique for every accessed file, to individual 
-processes. 
-Where the process keep track of their accessed files,
-therfore file descriptors differ from one another per file, but also may vary between different processes. 
+At this time, we plan to keep file descriptors unique for the entire OS, so that we dont put too much information on struct thread 
 
 ---- ALGORITHMS ----
 
@@ -151,12 +142,7 @@ remain the same.
 >> B5: Briefly describe your implementation of the "wait" system call
 >> and how it interacts with process termination.
 
-We plan on tracking the child process' exit status in a new struct. These
-	statuses will then be added to a list in the parent. When a child 
-	is created, the parent will wait until the child updates the return
-	status and wakes the parent. The parent will also be responsible to
-	avoid race conditions. When a child exits, the updated status will be 
-	sent to the parent.
+Our wait system call returns the pid of the method process_wait()
 
 >> B6: Any access to user program memory at a user-specified address
 >> can fail due to a bad pointer value.  Such accesses must cause the
@@ -177,7 +163,7 @@ The easiest way of ensuring that there is no bad pointer value is writing
 	will check to ensure the pointer value is valid. If it is not, the 
 	process can then be terminated, or the issue resolved. Otherwise,
 	the process can proceed as it would. If an error does still occur,
-	this exception can be handled
+	this exception can be handled.
 
 ---- SYNCHRONIZATION ----
 
@@ -186,9 +172,9 @@ The easiest way of ensuring that there is no bad pointer value is writing
 >> loading.  How does your code ensure this?  How is the load
 >> success/failure status passed back to the thread that calls "exec"?
 
-Our implementation plans to work around this using both a semaphore and boolean . If
-the semaphore loads properly set the boolean to true, else false. The 
-boolean is then passed back to the parent.
+Our implementation  works around this using semaphore and a bool.
+When a thread is created, it stores the value 0. Before the file
+is loaded, the parent is blocked by a semaphore.
 
 >> B8: Consider parent process P with child process C.  How do you
 >> ensure proper synchronization and avoid race conditions when P
@@ -213,21 +199,22 @@ and after wait(C) is called and throw an exception if it does.
 >> B9: Why did you choose to implement access to user memory from the
 >> kernel in the way that you did?
 
-This was the mosst effecient and knowlegedble way for us, given skill level and our knowlegde of the OS
+Implemented this way due to ease.
 
 >> B10: What advantages or disadvantages can you see to your design
 >> for file descriptors?
 
 Advantages:
-Simple, Easy to Edit. Self Explanatory
+Easy to implement
 
 Disadvantages:
-Costly. 
+Costly
+Slow, times out
 
 >> B11: The default tid_t to pid_t mapping is the identity mapping.
 >> If you changed it, what advantages are there to your approach?
 
-Mapping was not changed.
+Mapping was not changed
 			   SURVEY QUESTIONS
 			   ================
 
